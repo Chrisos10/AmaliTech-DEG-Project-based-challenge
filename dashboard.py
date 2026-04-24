@@ -326,8 +326,11 @@ with tab1:
             font=dict(family="Syne", size=18, color="#E8EDF5"),
             align="center"
         )
-        fig.update_layout(title="Order Status Distribution", showlegend=True,
-                          legend=dict(orientation="h", y=-0.1))
+        fig.update_layout(
+            title=dict(text="Order Status Distribution", y=0.02, x=0.5, xanchor="center", yanchor="bottom"),
+            showlegend=True,
+            legend=dict(orientation="h", y=-0.15)
+        )
         st.plotly_chart(dark(fig, 380), use_container_width=True)
 
     with col_b:
@@ -642,7 +645,13 @@ with tab4:
     ))
     fig.update_layout(
         title="Delivery Anomaly Heatmap — Z-Score by State & Month<br><sup>Red = Abnormally High Late Rate | Green = Better Than Normal</sup>",
-        xaxis=dict(tickangle=-45, tickfont=dict(size=9)),
+        xaxis=dict(
+            type="category",
+            tickangle=-45,
+            tickfont=dict(size=9),
+            categoryorder="array",
+            categoryarray=sorted(heatmap_pivot.columns.tolist())
+        ),
         yaxis=dict(tickfont=dict(size=10))
     )
     st.plotly_chart(dark(fig, 520), use_container_width=True)
@@ -710,7 +719,13 @@ with tab4:
 
         fig.update_layout(
             title=f"Monthly Late Rate Trend — {', '.join(trend_states)}",
-            xaxis=dict(tickangle=-45, tickfont=dict(size=9)),
+            xaxis=dict(
+                type="category",
+                tickangle=-45,
+                tickfont=dict(size=9),
+                categoryorder="array",
+                categoryarray=sorted(monthly_filtered["order_month_str"].unique())
+            ),
             yaxis_title="Late Rate (%)",
             legend=dict(orientation="h", y=1.1)
         )
