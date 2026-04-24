@@ -435,7 +435,7 @@ with tab2:
             color=state_sorted["late_pct"],
             colorscale=[[0, "#1A3A5C"], [0.5, "#F39C12"], [1, "#DC3545"]],
             showscale=True,
-            colorbar=dict(title="Late %", tickfont=dict(color="#6B82A8"))
+            colorbar=dict(title=dict(text="Late %", font=dict(color="#6B82A8")), tickfont=dict(color="#6B82A8"))
         ),
         text=state_sorted["late_pct"].apply(lambda x: f"{x:.1f}%"),
         textposition="outside",
@@ -631,9 +631,8 @@ with tab4:
         zmin=-2,
         zmax=4,
         colorbar=dict(
-            title="Z-Score",
-            tickfont=dict(color="#6B82A8"),
-            titlefont=dict(color="#6B82A8")
+            title=dict(text="Z-Score", font=dict(color="#6B82A8")),
+            tickfont=dict(color="#6B82A8")
         ),
         hovertemplate="State: %{y}<br>Month: %{x}<br>Z-Score: %{z:.2f}<extra></extra>"
     ))
