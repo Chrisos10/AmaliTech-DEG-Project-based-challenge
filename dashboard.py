@@ -4,18 +4,14 @@ import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
-# ─────────────────────────────────────────────
 #  PAGE CONFIG
-# ─────────────────────────────────────────────
 st.set_page_config(
     page_title="Veridi Logistics — Delivery Audit",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# ─────────────────────────────────────────────
 #  GLOBAL STYLES
-# ─────────────────────────────────────────────
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
@@ -142,9 +138,7 @@ hr { border-color: #1E2840; }
 </style>
 """, unsafe_allow_html=True)
 
-# ─────────────────────────────────────────────
 #  DATA LOADING
-# ─────────────────────────────────────────────
 MASTER_URL   = "https://drive.google.com/uc?id=1sZHcutPQvNXXTDS9rRnidTV4eRS52dgU"
 MONTHLY_URL  = "https://drive.google.com/uc?id=1oIRA_LUhoPb_USERP_-4nNbgqcyhlMvQ"
 STATE_URL    = "https://drive.google.com/uc?id=1PrRmbxPQ0PeZQZ00IxH159cla2m-tlB3"
@@ -161,9 +155,7 @@ def load_data():
 with st.spinner("Loading data..."):
     master_df, monthly_df, state_df, category_df = load_data()
 
-# ─────────────────────────────────────────────
 #  PLOTLY DARK THEME HELPER
-# ─────────────────────────────────────────────
 CHART_BG  = "#080C14"
 GRID_COLOR = "#1A2540"
 
@@ -193,9 +185,7 @@ STATUS_COLORS = {
     "Super Late": "#E74C3C"
 }
 
-# ─────────────────────────────────────────────
 #  SIDEBAR
-# ─────────────────────────────────────────────
 with st.sidebar:
     st.markdown("""
     <div style='margin-bottom:1.5rem'>
@@ -228,9 +218,7 @@ with st.sidebar:
         placeholder="All categories"
     )
 
-# ─────────────────────────────────────────────
 #  APPLY FILTERS
-# ─────────────────────────────────────────────
 df = master_df.copy()
 if selected_states:
     df = df[df["customer_state"].isin(selected_states)]
@@ -239,9 +227,7 @@ if selected_statuses:
 if selected_categories:
     df = df[df["product_category_name_english"].isin(selected_categories)]
 
-# ─────────────────────────────────────────────
 #  HEADER
-# ─────────────────────────────────────────────
 st.markdown("""
 <div style='padding: 1.2rem 0 0.5rem 0'>
     <h1 style='font-family:Syne;font-size:2rem;font-weight:800;color:#E8EDF5;margin:0;letter-spacing:-0.02em'>
@@ -255,9 +241,7 @@ st.markdown("""
 
 st.markdown("---")
 
-# ─────────────────────────────────────────────
 #  KPI ROW
-# ─────────────────────────────────────────────
 total        = len(df)
 late_count   = df["is_late"].sum() if "is_late" in df.columns else 0
 late_pct     = (late_count / total * 100) if total > 0 else 0
@@ -274,9 +258,7 @@ k5.metric("Super Late Orders",f"{super_late_n:,}",  delta_color="inverse")
 
 st.markdown("")
 
-# ─────────────────────────────────────────────
 #  TABS
-# ─────────────────────────────────────────────
 tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "Overview",
     "Geography",
@@ -285,9 +267,7 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "Drill-Down"
 ])
 
-# ══════════════════════════════════════════════
 #  TAB 1 — OVERVIEW
-# ══════════════════════════════════════════════
 with tab1:
     st.markdown('<div class="section-title">Delivery Status Breakdown</div>', unsafe_allow_html=True)
 
@@ -351,7 +331,7 @@ with tab1:
 
     st.markdown('<div class="section-title">Delay vs Customer Satisfaction</div>', unsafe_allow_html=True)
 
-    # Line chart — delay days vs avg review score (binned)
+    # Line chart — delay days vs avg review score
     df_plot = df.copy()
     df_plot["delay_bin"] = pd.cut(df_plot["days_difference"],
                                    bins=range(-60, 50, 5),
@@ -413,9 +393,7 @@ with tab1:
         </div>
         """, unsafe_allow_html=True)
 
-# ══════════════════════════════════════════════
 #  TAB 2 — GEOGRAPHY
-# ══════════════════════════════════════════════
 with tab2:
     st.markdown('<div class="section-title">State-Level Late Delivery Rate</div>', unsafe_allow_html=True)
 
@@ -508,9 +486,7 @@ with tab2:
     </div>
     """, unsafe_allow_html=True)
 
-# ══════════════════════════════════════════════
 #  TAB 3 — CATEGORIES
-# ══════════════════════════════════════════════
 with tab3:
     st.markdown('<div class="section-title">Late Rate by Product Category</div>', unsafe_allow_html=True)
 
@@ -583,9 +559,7 @@ with tab3:
     </div>
     """, unsafe_allow_html=True)
 
-# ══════════════════════════════════════════════
 #  TAB 4 — ANOMALIES
-# ══════════════════════════════════════════════
 with tab4:
     st.markdown('<div class="section-title">Systemic Anomaly Detection — March 2018 Crisis</div>', unsafe_allow_html=True)
 
@@ -689,7 +663,7 @@ with tab4:
                           font=dict(color=palette[0], size=10)
                       ))
 
-        # March 2018 anomaly marker — use shape+annotation (categorical x-axis)
+        # March 2018 anomaly marker 
         x_labels = monthly_filtered[monthly_filtered["customer_state"] == state_choice]["order_month_str"].tolist()
         if "2018-03" in x_labels:
             march_idx = x_labels.index("2018-03")
@@ -722,9 +696,7 @@ with tab4:
         )
         st.plotly_chart(dark(fig, 400), use_container_width=True)
 
-# ══════════════════════════════════════════════
 #  TAB 5 — DRILL-DOWN
-# ══════════════════════════════════════════════
 with tab5:
     st.markdown('<div class="section-title">Order-Level Exploration</div>', unsafe_allow_html=True)
 
@@ -811,9 +783,7 @@ with tab5:
 
     st.caption(f"Showing first 100 of {len(drill_df):,} records for {drill_state} ({drill_status})")
 
-# ─────────────────────────────────────────────
 #  FOOTER
-# ─────────────────────────────────────────────
 st.markdown("---")
 st.markdown("""
 <div style='text-align:center;font-family:DM Sans;font-size:0.75rem;color:#2A3A55;padding:1rem 0'>
