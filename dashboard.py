@@ -503,7 +503,7 @@ with tab2:
     worst = state_df.nlargest(3, "late_pct")["customer_state"].tolist()
     st.markdown(f"""
     <div class="alert-warning">
-        <b>Regional Finding:</b> The Northeast states ({', '.join(worst)}) consistently show the highest late rates —
+        <b>Regional Finding:</b> The Northeast states ({', '.join(worst)}) consistently show the highest late rates, 
         all above 15%. However, remote northern states (AC, RO, AM) paradoxically show low late rates
         because Veridi over-pads delivery estimates for remote areas.
     </div>
@@ -579,7 +579,7 @@ with tab3:
     st.markdown("""
     <div class="alert-warning">
         <b>Category Finding:</b> <b>Audio</b> (13.0%) and <b>Fashion Underwear/Beach</b> (12.8%) have the worst late rates.
-        <b>Office Furniture</b> (9.3%) has one of the lowest review scores (3.65) — furniture buyers are the
+        <b>Office Furniture</b> (9.3%) has one of the lowest review scores (3.65); furniture buyers are the
         least forgiving customers when deliveries are late.
     </div>
     """, unsafe_allow_html=True)
@@ -593,7 +593,7 @@ with tab4:
     st.markdown("""
     <div class="alert-critical">
         <b>Critical Finding:</b> A systemic logistics failure hit <b>15 out of 16 major states simultaneously in March 2018</b>.
-        Late rates spiked 3–4 standard deviations above normal before collapsing back in April 2018 —
+        Late rates spiked 3–4 standard deviations above normal before collapsing back in April 2018, 
         suggesting a specific operational event (carrier strike, system outage, or warehouse failure).
     </div>
     """, unsafe_allow_html=True)
