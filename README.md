@@ -13,7 +13,7 @@ An audit of 96,470 delivered orders from the Olist Brazilian E-Commerce Dataset 
 
 | Deliverable | Link |
 |---|---|
-| Notebook (Google Colab) | _Add your Colab link here_ |
+| Notebook (Google Colab) |https://colab.research.google.com/drive/1cHGKLEfa3LbFXIH8nfJ0rcHj6WUEg7Ca?usp=sharing|
 | Dashboard (Streamlit) | _Add your Streamlit link here_ |
 | Presentation (Google Slides) | _Add your Slides link here_ |
 
@@ -49,7 +49,7 @@ Only orders with `order_status == 'delivered'` were retained (96,478 of 99,441 t
 
 ---
 
-### Candidate's Choice — Delivery Anomaly Detection
+### Candidate's Choice: Delivery Anomaly Detection
 
 **Feature:** Z-score based anomaly detection on monthly late delivery rates per state, with an interactive heatmap and drill-down trend chart.
 
